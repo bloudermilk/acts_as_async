@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email             = "brendan@gophilosophie.com"
   s.authors           = [ "Brendan Loudermilk" ]
 
-  s.files             = %w( README.md Rakefile LICENSE HISTORY.md )
+  s.files             = %w( README.md LICENSE )
   s.files            += Dir.glob("lib/**/*")
 
   s.extra_rdoc_files  = [ "LICENSE", "README.md" ]
