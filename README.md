@@ -1,7 +1,5 @@
 # ActsAsAsync
 
-## Description
-
 ActsAsAsync is an ActiveRecord extension that provides your models with
 easy-to-use Resque helpers.
 
@@ -55,8 +53,8 @@ of any methods on your class:
 
 Feel free to async class methods as well:
 
-   lunch_break = 2.hours.from_now
-   Post.async_at(lunch_break, :author_lazy_post)
+    lunch_break = 2.hours.from_now
+    Post.async_at(lunch_break, :author_lazy_post)
 
 ### Dynamic async methods
 
@@ -69,16 +67,15 @@ ActsAsAsync is simply a thin layer on top of [Resque][resque] and
 [Resque-scheduler][resque_scheduler]. To learn how to configure your redis
 connection, run workers, view the web interface and more visit their home pages.
 
-[build_status]: https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master&.png
 [resque]: https://github.com/defunkt/resque
-[reque_scheduler]: https://github.com/bvandenbos/resque-scheduler
+[resque_scheduler]: https://github.com/bvandenbos/resque-scheduler
 
 
 ## Compatibility
 
 ActsAsAsync is tested against Ruby 1.8.7, 1.9.2, 1.9.3, REE, Rubinius, and JRuby.
 
-![Build Status][build_status]
+![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master&.png)
 
 [Build History](http://travis-ci.org/mongoid/mongoid)
 
