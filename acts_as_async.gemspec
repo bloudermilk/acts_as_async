@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Brendan Loudermilk"]
   s.email       = ["brendan@gophilosophie.com"]
   s.homepage    = "http://github.com/bloudermilk/acts_as_async"
-  s.summary     = "The marriage of ActiveRecord and Resque"
-  s.description = "ActsAsAsync is an ActiveRecord extension that provides your models with easy-to-use Resque helpers"
+  s.summary     = "The marriage of ActiveRecord and Resque."
+  s.description = "ActsAsAsync is an ActiveRecord extension that provides your models with easy-to-use Resque helpers."
 
   # TODO: Find minimum versions
   s.add_dependency "resque"
