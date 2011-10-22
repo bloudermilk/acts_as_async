@@ -35,8 +35,7 @@ is as easy as:
 
 ### Basic usage
 
-You can use any of the three `async` methods to enqueue the execution
-of any methods on your class:
+There are three ways to async any method from your class:
 
     post = Post.create(:body => "Wow, acts_as_async is neat!")
 
@@ -49,14 +48,13 @@ of any methods on your class:
     # Enqueue the method some time from now
     post.async_in(10.minutes, :self_destuct)
 
-### Class methods
-
 Feel free to async class methods as well:
 
-    lunch_break = 2.hours.from_now
-    Post.async_at(lunch_break, :author_lazy_post)
+    Post.async(:author_lazy_post)
+    Post.async_at(1.day.from_now, :author_lazy_post)
+    Post.async_in(10.minutes, :author_lazy_post)
 
-### Dynamic async methods
+### Dynamic methods
 
 Coming soon...
 
