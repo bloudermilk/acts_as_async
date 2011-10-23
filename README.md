@@ -65,9 +65,8 @@ connection, run workers, view the web interface, and more visit their home pages
 
 ActsAsAsync is tested against Ruby 1.8.7, 1.9.2, 1.9.3, REE, Rubinius, and JRuby.
 
-Adding better (read: any) test coverage is top priority at the moment, so expect
-to see the builds failing for a while. Not because the gem is broken (hopefully)
-, but because the tests haven't been implemented yet.
+**Adding better test coverage is top priority at the moment. Don't be shy, issue a
+pull request with your tests.**
 
 ![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master&.png)
 
