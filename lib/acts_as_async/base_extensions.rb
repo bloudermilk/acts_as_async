@@ -4,12 +4,12 @@ module ActsAsAsync
 
     module ClassMethods
       def acts_as_async(opts={})
-        # Make the default queue for this class "default"
-        opts.reverse_merge!(queue: :default)
-
-        # Set the queue unless one is already set
-        unless instance_variable_defined?(:@queue)
+        # Set the queue to the passed option
+        if opts[:queue]
           instance_variable_set(:@queue, opts[:queue])
+        # If no option was passed and there isn't a queue defined, use "default"
+        elsif !instance_variable_defined?(:@queue)
+          instance_variable_set(:@queue, :default)
         end
 
         include ActsAsAsync::Helper
