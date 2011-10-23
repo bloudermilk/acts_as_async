@@ -16,43 +16,35 @@ Installing ActsAsAsync is as simple as adding it to your Gemfile:
 
 ## Usage
 
-### Setup
-
 ActsAsAsync aims to be as simple as possible to use. Including it in your model
 is as easy as:
 
     class Post < ActiveRecord::Base
       acts_as_async
-
-      def self.author_lazy_post
-        Post.create(:body => "Lorem ipsum " * 10)
-      end
-
-      def self_destruct
-        destroy
-      end
     end
 
 ### Basic usage
 
-There are three ways to async any method from your class:
+ActsAsAsync adds three methods to your class that you can use to async any other
+method.
 
     post = Post.create(:body => "Wow, acts_as_async is neat!")
 
-    # Enqueue the method right away
-    post.async(:self_destruct)
+    # Self-destruct as soon as possible
+    post.async(:destroy)
 
-    # Enqueue the method at a specific time
-    post.async_at(1.day.from_now, :self_destruct)
+    # Self-destruct at this time tomorrow
+    post.async_at(Time.now + 1.day, :destroy)
 
-    # Enqueue the method some time from now
-    post.async_in(10.minutes, :self_destuct)
+    # Self-destruct in 10 minutes
+    post.async_in(10.minutes, :destroy)
 
-Feel free to async class methods as well:
+If all goes well the above methods should be added to Resque, and executed at
+around the time you wanted. Feel free to async class methods as well:
 
-    Post.async(:author_lazy_post)
-    Post.async_at(1.day.from_now, :author_lazy_post)
-    Post.async_in(10.minutes, :author_lazy_post)
+    Post.async(:destroy_all)
+    Post.async_at(1.day.from_now, :destroy_all)
+    Post.async_in(10.minutes, :destroy_all)
 
 ### Dynamic methods
 
@@ -63,7 +55,7 @@ Coming soon...
 
 ActsAsAsync is simply a thin layer on top of [Resque][resque] and 
 [Resque-scheduler][resque_scheduler]. To learn how to configure your redis
-connection, run workers, view the web interface and more visit their home pages.
+connection, run workers, view the web interface, and more visit their home pages.
 
 [resque]: https://github.com/defunkt/resque
 [resque_scheduler]: https://github.com/bvandenbos/resque-scheduler
