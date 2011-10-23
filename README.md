@@ -63,7 +63,7 @@ connection, run workers, view the web interface, and more visit their home pages
 
 ## Compatibility
 
-ActsAsAsync is tested against Ruby 1.8.7, 1.9.2, 1.9.3, REE, Rubinius, and JRuby.
+ActsAsAsync is tested against the same Rubies as Resque: Ruby 1.8.7, 1.9.2, Rubinius 2.0, and JRuby.
 
 **Adding better test coverage is top priority at the moment. Don't be shy, issue a
 pull request with your tests.**
