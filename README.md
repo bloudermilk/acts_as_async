@@ -39,8 +39,7 @@ method.
     # Self-destruct in 10 minutes
     post.async_in(10.minutes, :destroy)
 
-If all goes well the above methods should be added to Resque, and executed at
-around the time you wanted. Feel free to async class methods as well:
+Feel free to async class methods as well:
 
     Post.async(:destroy_all)
     Post.async_at(1.day.from_now, :destroy_all)
