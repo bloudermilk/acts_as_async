@@ -75,7 +75,7 @@ for any existing method on your model. For example:
     book.async_read_at!(Time.now + 1.day)
 
     # Paint the book blue in a couple years
-    book.async_paint_in(2.years, "red")
+    book.async_paint_in(2.years, "blue")
 
 ### Additional notes
 
