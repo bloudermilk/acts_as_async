@@ -25,8 +25,8 @@ is as easy as:
 
 ### Basic usage
 
-ActsAsAsync adds three methods to your class that you can use to async any other
-method.
+ActsAsAsync adds three instance methods to your model that you can use to async
+any other instance method:
 
     post = Post.create(:body => "Wow, acts_as_async is neat!")
 
@@ -39,7 +39,7 @@ method.
     # Self-destruct in 10 minutes
     post.async_in(10.minutes, :destroy)
 
-Feel free to async class methods as well:
+It also adds three identical class methods:
 
     Post.async(:destroy_all)
     Post.async_at(1.day.from_now, :destroy_all)
@@ -47,7 +47,46 @@ Feel free to async class methods as well:
 
 ### Dynamic methods
 
-Coming soon...
+In addition to the helper methods above, ActsAsAsync supports dynamic methods
+for any existing method on your model. For example:
+
+    class Audiobook < ActiveRecord::Base
+      acts_as_async
+
+      def transcribe
+        # Some long-running logic here
+      end
+
+      def read!
+        # Computers like to read too!
+      end
+
+      def paint(color)
+        # I don't know why you'd paint a book...
+      end
+    end
+
+    book = Audiobook.first
+
+	# Transcribe the book as soon as possible
+    book.async_transcribe
+
+    # Read the book at this time tomorrow
+    book.async_read_at!(Time.now + 1.day)
+
+    # Paint the book blue in a couple years
+    book.async_paint_in(2.years, "red")
+
+### Additional notes
+
+  * You can pass any number of additional arguments to async'd methods so long
+    as they can be serialized into JSON
+  * By deafult, each model will add tasks to a queue named "default". You can
+	pass the `:queue` option to `acts_as_async` to specify a different queue.
+  * Dynamic methods support names with exclamation points but not question
+    marks. This was a design decision to discourage misuse of the question mark
+    in method names. If you absolutely must async a method with a question mark,
+    just use one of the `async :method` helpers.
 
 
 ## Everything else...
