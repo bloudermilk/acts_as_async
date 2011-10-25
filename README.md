@@ -81,6 +81,9 @@ for any existing method on your model. For example:
 
   * You can pass any number of additional arguments to async'd methods so long
     as they can be serialized into JSON
+  * Adding acts_as_async to your Gemfile automatically loads both Resque and
+    Resque-scheduler's rake tasks. This means you can use both 
+    `$ rake resque:work` and `$ rake resque:scheduler` right out of the box.
   * By deafult, each model will add tasks to a queue named "default". You can
 	pass the `:queue` option to `acts_as_async` to specify a different queue.
   * Dynamic methods support names with exclamation points but not question
@@ -93,7 +96,8 @@ for any existing method on your model. For example:
 
 ActsAsAsync is simply a thin layer on top of [Resque][resque] and 
 [Resque-scheduler][resque_scheduler]. To learn how to configure your redis
-connection, run workers, view the web interface, and more visit their home pages.
+connection, run workers, view the web interface, and more visit their home
+pages.
 
 [resque]: https://github.com/defunkt/resque
 [resque_scheduler]: https://github.com/bvandenbos/resque-scheduler
@@ -101,10 +105,11 @@ connection, run workers, view the web interface, and more visit their home pages
 
 ## Compatibility
 
-ActsAsAsync is tested against the same Rubies as Resque: Ruby 1.8.7, 1.9.2, Rubinius 2.0, and JRuby.
+ActsAsAsync is tested against the same Rubies as Resque: Ruby 1.8.7, 1.9.2,
+Rubinius 2.0, and JRuby.
 
-**Adding better test coverage is top priority at the moment. Don't be shy, issue a
-pull request with your tests.**
+**Adding better test coverage is top priority at the moment. Don't be shy, issue
+a pull request with your tests.**
 
 ![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master&.png)
 
@@ -113,4 +118,5 @@ pull request with your tests.**
 
 ## License
 
-ActsAsAsync is released under the MIT License. See the LICENSE file for more info.
+ActsAsAsync is released under the MIT license. See the LICENSE file for more
+info.
