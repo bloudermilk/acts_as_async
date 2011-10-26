@@ -8,7 +8,7 @@ $LOAD_PATH.unshift lib_path unless $LOAD_PATH.include? lib_path
 require "acts_as_async"
 
 ActiveRecord::Base.establish_connection({
-  :adapter => "sqlite3",
+  :adapter => RUBY_PLATFORM == "java" ? "jdbcsqlite3" : "sqlite3",
   :database => ":memory:"
 })
 
