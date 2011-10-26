@@ -16,8 +16,6 @@ describe ActsAsAsync::BaseExtensions do
     end
 
     context "when @queue is already set" do
-      let :model { BareModel }
-
       context "when :queue is passed as an option" do
         it "should override the @queue value to the value passed"
       end
