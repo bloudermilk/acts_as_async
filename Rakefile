@@ -5,7 +5,9 @@ require "rake"
 require "rspec"
 require "rspec/core/rake_task"
 
-$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+lib_path = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift lib_path unless $LOAD_PATH.include? lib_path
+
 require "acts_as_async/version"
 
 RSpec::Core::RakeTask.new("spec")

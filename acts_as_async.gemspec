@@ -18,8 +18,6 @@ Gem::Specification.new do |s|
   s.add_dependency "activesupport"
   s.add_dependency "activerecord"
 
-  s.add_development_dependency "rspec", "~> 2.7.0"
-
   s.files         = Dir.glob("lib/**/*") + %w(LICENSE Rakefile README.md)
   s.require_path  = "lib"
 end

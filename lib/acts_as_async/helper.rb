@@ -84,12 +84,12 @@ module ActsAsAsync
       # exist, since technically we do respond to that method but throw
       # an exception.
       if RUBY_VERSION >= "1.9.2"
-        def respond_to_missing?(method_id, include_private)
-          method =~ METHOD_REGEXP || super
+        def respond_to_missing?(method_id, *)
+          method_id =~ METHOD_REGEXP || super
         end
       else
-        def respond_to?(method_id, include_private)
-          method =~ METHOD_REGEXP || super
+        def respond_to?(method_id, *)
+          method_id =~ METHOD_REGEXP || super
         end
       end
     end
