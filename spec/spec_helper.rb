@@ -31,3 +31,19 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+
+def new_async_model(&block)
+  new_model do
+    acts_as_async
+
+    instance_exec &block if block
+  end
+end
+
+def new_model(&block)
+  Class.new ActiveRecord::Base do
+    set_table_name "models"
+
+    instance_exec &block if block
+  end
+end
