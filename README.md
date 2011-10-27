@@ -108,9 +108,6 @@ pages.
 ActsAsAsync is tested against the same Rubies as Resque: Ruby 1.8.7, 1.9.2,
 Rubinius 2.0, and JRuby.
 
-**Adding better test coverage is top priority at the moment. Don't be shy, issue
-a pull request with your tests.**
-
 ![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master&.png)
 
 [Build History](http://travis-ci.org/mongoid/mongoid)
