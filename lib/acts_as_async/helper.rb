@@ -56,7 +56,7 @@ module ActsAsAsync
       METHOD_REGEXP = /\Aasync_([a-zA-Z]\w*?)(_at|_in)?(!)?\z/
 
       def method_missing(method_id, *args, &block)
-        if method_id =~ METHOD_REGEXP
+        if method_id.to_s =~ METHOD_REGEXP
           # Compose the method to be async'd, with an optional bang
           method = "#{$1}#{$3}"
 
