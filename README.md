@@ -110,7 +110,7 @@ Rubinius 2.0, and JRuby.
 
 ![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master&.png)
 
-[Build History](http://travis-ci.org/mongoid/mongoid)
+[Build History](http://travis-ci.org/#!/bloudermilks/acts_as_async)
 
 
 ## License
