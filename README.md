@@ -8,10 +8,12 @@ easy-to-use Resque helpers.
 
 Installing ActsAsAsync is as simple as adding it to your Gemfile:
 
-    $ cat Gemfile
-    ...
-    gem "acts_as_async"
-    ...
+```
+$ cat Gemfile
+...
+gem "acts_as_async"
+...
+```
 
 
 ## Usage
@@ -19,63 +21,71 @@ Installing ActsAsAsync is as simple as adding it to your Gemfile:
 ActsAsAsync aims to be as simple as possible to use. Including it in your model
 is as easy as:
 
-    class Post < ActiveRecord::Base
-      acts_as_async
-    end
+```ruby
+class Post < ActiveRecord::Base
+  acts_as_async
+end
+```
 
 ### Basic usage
 
 ActsAsAsync adds three instance methods to your model that you can use to async
 any other instance method:
 
-    post = Post.create(:body => "Wow, acts_as_async is neat!")
+```ruby
+post = Post.create(:body => "Wow, acts_as_async is neat!")
 
-    # Self-destruct as soon as possible
-    post.async(:destroy)
+# Self-destruct as soon as possible
+post.async(:destroy)
 
-    # Self-destruct at this time tomorrow
-    post.async_at(Time.now + 1.day, :destroy)
+# Self-destruct at this time tomorrow
+post.async_at(Time.now + 1.day, :destroy)
 
-    # Self-destruct in 10 minutes
-    post.async_in(10.minutes, :destroy)
+# Self-destruct in 10 minutes
+post.async_in(10.minutes, :destroy)
+```
 
 It also adds three identical class methods:
 
-    Post.async(:destroy_all)
-    Post.async_at(1.day.from_now, :destroy_all)
-    Post.async_in(10.minutes, :destroy_all)
+```ruby
+Post.async(:destroy_all)
+Post.async_at(1.day.from_now, :destroy_all)
+Post.async_in(10.minutes, :destroy_all)
+```
 
 ### Dynamic methods
 
 In addition to the helper methods above, ActsAsAsync supports dynamic methods
 for any existing method on your model. For example:
 
-    class Audiobook < ActiveRecord::Base
-      acts_as_async
+```ruby
+class Audiobook < ActiveRecord::Base
+  acts_as_async
 
-      def transcribe
-        # Some long-running logic here
-      end
+  def transcribe
+	# Some long-running logic here
+  end
 
-      def read!
-        # Computers like to read too!
-      end
+  def read!
+	# Computers like to read too!
+  end
 
-      def paint(color)
-        # I don't know why you'd paint a book...
-      end
-    end
+  def paint(color)
+	# I don't know why you'd paint a book...
+  end
+end
 
-    book = Audiobook.first
+book = Audiobook.first
 
-	# Transcribe the book as soon as possible
-    book.async_transcribe
+# Transcribe the book as soon as possible
+book.async_transcribe
 
-    # Read the book at this time tomorrow
-    book.async_read_at!(Time.now + 1.day)
+# Read the book at this time tomorrow
+book.async_read_at!(Time.now + 1.day)
 
-    # Paint the book blue in a couple years
-    book.async_paint_in(2.years, "blue")
+# Paint the book blue in a couple years
+book.async_paint_in(2.years, "blue")
+```
 
 ### Additional notes
 
