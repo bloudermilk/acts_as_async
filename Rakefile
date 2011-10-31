@@ -18,6 +18,6 @@ task :build do
 end
 
 task :install => :build do
-  system "sudo gem install acts_as_async-#{ActsAsAsync::VERSION}.gem"
+  system "gem install acts_as_async-#{ActsAsAsync::VERSION}.gem"
 end
 
