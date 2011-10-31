@@ -115,8 +115,8 @@ pages.
 
 ## Compatibility
 
-ActsAsAsync is tested against the same Rubies as Resque: Ruby 1.8.7, 1.9.2,
-Rubinius 2.0, and JRuby.
+ActsAsAsync is tested against the following Rubies: MRI 1.8.7, MRI 1.9.2,
+MRI 1.9.3, Rubinius 2.0, and JRuby.
 
 ![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master&.png)
 
