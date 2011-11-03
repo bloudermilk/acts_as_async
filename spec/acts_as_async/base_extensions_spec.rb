@@ -38,7 +38,7 @@ describe ActsAsAsync::BaseExtensions do
     end
 
     context "when @queue isn't set" do
-      let (:model) { new_model }
+      let(:model) { new_model }
 
       context "when :queue is passed as an option" do
         it "should set @queue to the value passed" do
