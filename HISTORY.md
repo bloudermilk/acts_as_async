@@ -1,3 +1,7 @@
+## 0.2.2 (2011-11-03)
+
+* Sets @queue inherited async'd models
+
 ## 0.2.1 (2011-10-26)
 
 * Fixes bugs regarding dynamic methods in Ruby 1.8.7
