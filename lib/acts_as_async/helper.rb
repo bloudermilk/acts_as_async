@@ -36,6 +36,11 @@ module ActsAsAsync
       def async_in(time, method, *args)
         Resque.enqueue_in(time, self, method, *args)
       end
+
+      def inherited(subclass)
+        queue = instance_variable_get(:@queue)
+        subclass.instance_variable_set(:@queue, queue)
+      end
     end
 
     module InstanceMethods

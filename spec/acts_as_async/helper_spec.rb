@@ -102,6 +102,18 @@ describe ActsAsAsync::Helper do
     end
   end
 
+
+  describe ".inherited" do
+    context "when @queue isn't set" do
+      let(:model) { new_async_model }
+      let(:inherited) { Class.new model }
+
+      it "should set @queue to the value of the parent" do
+        inherited.instance_variable_get(:@queue).should == :default
+      end
+    end
+  end  
+
   describe "#async" do
     let (:instance) { Model.create }
 
