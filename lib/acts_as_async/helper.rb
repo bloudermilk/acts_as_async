@@ -65,7 +65,7 @@ module ActsAsAsync
           # Compose the method to be async'd, with an optional bang
           method = "#{$1}#{$3}"
 
-          if respond_to? method
+          if respond_to? method, true
             # If we're not using the _at or _in methods, just call async
             if $2.nil?
               __send__(:async, method, *args)
