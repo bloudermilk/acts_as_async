@@ -1,3 +1,7 @@
+## 0.2.3 (2012-12-09)
+
+* Dynamic methods now support private methods [#3]
+
 ## 0.2.2 (2011-11-03)
 
 * Sets @queue inherited async'd models
