@@ -295,6 +295,14 @@ describe ActsAsAsync::Helper do
           Model.async_lol_in interval, "foo", "bar"
         end
       end
+
+      context "when the matched method is private" do
+        let (:model) { Model.create }
+
+        it "should still work" do
+          lambda { model.async_a_private_method }.should_not raise_error
+        end
+      end
     end
     
     context "when the extracted method doesn't exist" do

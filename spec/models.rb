@@ -8,4 +8,9 @@ class Model < ActiveRecord::Base
   def smash!(value = "SMASHED")
     update_attribute :name, value
   end
+
+private
+
+  def a_private_method; end
+
 end
