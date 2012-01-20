@@ -40,6 +40,7 @@ module ActsAsAsync
       def inherited(subclass)
         queue = instance_variable_get(:@queue)
         subclass.instance_variable_set(:@queue, queue)
+        super
       end
     end
 
