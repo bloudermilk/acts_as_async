@@ -9,10 +9,7 @@ easy-to-use Resque helpers.
 Installing ActsAsAsync is as simple as adding it to your Gemfile:
 
 ```
-$ cat Gemfile
-...
 gem "acts_as_async"
-...
 ```
 
 
