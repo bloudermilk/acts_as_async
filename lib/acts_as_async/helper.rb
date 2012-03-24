@@ -44,18 +44,16 @@ module ActsAsAsync
       end
     end
 
-    module InstanceMethods
-      def async(method, *args)
-        Resque.enqueue(self.class, id, method, *args)
-      end
+    def async(method, *args)
+      Resque.enqueue(self.class, id, method, *args)
+    end
 
-      def async_at(time, method, *args)
-        Resque.enqueue_at(time, self.class, id, method, *args)
-      end
+    def async_at(time, method, *args)
+      Resque.enqueue_at(time, self.class, id, method, *args)
+    end
 
-      def async_in(time, method, *args)
-        Resque.enqueue_in(time, self.class, id, method, *args)
-      end
+    def async_in(time, method, *args)
+      Resque.enqueue_in(time, self.class, id, method, *args)
     end
 
     module SharedMethods
@@ -86,7 +84,7 @@ module ActsAsAsync
 
       # Use respond_to_missing? on newer Ruby versions but fall back to
       # overriding respond_to? on older versions. In both cases, return
-      # true for any match, even if the method to be async'd doesn't 
+      # true for any match, even if the method to be async'd doesn't
       # exist, since technically we do respond to that method but throw
       # an exception.
       if RUBY_VERSION >= "1.9.2"
