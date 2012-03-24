@@ -1,3 +1,9 @@
+## 0.2.4 (2012-3-24)
+
+* Fixes bug that broke STI [#5]
+* Fixes deprication warning from ActiveSupport 3.2+ [#6]
+* Bumps test dependencies, which in turn fixes JRuby
+
 ## 0.2.3 (2012-1-09)
 
 * Dynamic methods now support private methods [#3]
