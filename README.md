@@ -1,7 +1,11 @@
-# ActsAsAsync
+# ActsAsAsync [![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master)][travis]
+[![Dependency Status](https://gemnasium.com/bloudermilk/acts_as_async.png?travis)][gemnasium]
 
 ActsAsAsync is an ActiveRecord extension that provides your models with
 easy-to-use Resque helpers.
+
+[travis]: http://travis-ci.org/bloudermilk/acts_as_async
+[gemnasium]: https://gemnasium.com/bloudermilk/acts_as_async
 
 
 ## Installation
@@ -89,7 +93,7 @@ book.async_paint_in(2.years, "blue")
   * You can pass any number of additional arguments to async'd methods so long
     as they can be serialized into JSON
   * Adding acts_as_async to your Gemfile automatically loads both Resque and
-    Resque-scheduler's rake tasks. This means you can use both 
+    Resque-scheduler's rake tasks. This means you can use both
     `$ rake resque:work` and `$ rake resque:scheduler` right out of the box.
   * By deafult, each model will add tasks to a queue named "default". You can
 	pass the `:queue` option to `acts_as_async` to specify a different queue.
@@ -101,7 +105,7 @@ book.async_paint_in(2.years, "blue")
 
 ## Everything else...
 
-ActsAsAsync is simply a thin layer on top of [Resque][resque] and 
+ActsAsAsync is simply a thin layer on top of [Resque][resque] and
 [Resque-scheduler][resque_scheduler]. To learn how to configure your redis
 connection, run workers, view the web interface, and more visit their home
 pages.
@@ -114,10 +118,6 @@ pages.
 
 ActsAsAsync is tested against the following Rubies: MRI 1.8.7, MRI 1.9.2,
 MRI 1.9.3, Rubinius 2.0, and JRuby.
-
-![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master&.png)
-
-[Build History](http://travis-ci.org/#!/bloudermilk/acts_as_async)
 
 
 ## License
