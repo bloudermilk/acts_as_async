@@ -1,5 +1,4 @@
-# ActsAsAsync [![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master)][travis]
-[![Dependency Status](https://gemnasium.com/bloudermilk/acts_as_async.png?travis)][gemnasium]
+# ActsAsAsync [![Build Status](https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/bloudermilk/acts_as_async.png?travis)][gemnasium]
 
 ActsAsAsync is an ActiveRecord extension that provides your models with
 easy-to-use Resque helpers.
