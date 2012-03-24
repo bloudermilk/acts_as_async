@@ -1,4 +1,4 @@
-## 0.2.3 (2012-12-09)
+## 0.2.3 (2012-1-09)
 
 * Dynamic methods now support private methods [#3]
 
