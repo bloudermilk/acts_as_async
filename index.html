@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>acts_as_async by bloudermilk</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>acts_as_async</h1>
+<p>ActsAsAsync is an ActiveRecord extension that provides your models with easy-to-use Resque helpers.</p>
+        <p class="view"><a href="https://github.com/bloudermilk/acts_as_async">View the Project on GitHub <small>bloudermilk/acts_as_async</small></a></p>
+        <ul>
+          <li><a href="https://github.com/bloudermilk/acts_as_async/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/bloudermilk/acts_as_async/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/bloudermilk/acts_as_async">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>ActsAsAsync <a href="http://travis-ci.org/bloudermilk/acts_as_async"><img src="https://secure.travis-ci.org/bloudermilk/acts_as_async.png?branch=master" alt="Build Status"></a> <a href="https://gemnasium.com/bloudermilk/acts_as_async"><img src="https://gemnasium.com/bloudermilk/acts_as_async.png?travis" alt="Dependency Status"></a>
+</h1>
+
+<p>ActsAsAsync is an ActiveRecord extension that provides your models with
+easy-to-use Resque helpers.</p>
+
+<h2>Installation</h2>
+
+<p>Installing ActsAsAsync is as simple as adding it to your Gemfile:</p>
+
+<div class="highlight">
+<pre><span class="n">gem</span> <span class="s2">"acts_as_async"</span>
+</pre>
+</div>
+
+
+<h2>Usage</h2>
+
+<p>ActsAsAsync aims to be as simple as possible to use. Including it in your model
+is as easy as:</p>
+
+<div class="highlight">
+<pre><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">acts_as_async</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<h3>Basic usage</h3>
+
+<p>ActsAsAsync adds three instance methods to your model that you can use to async
+any other instance method:</p>
+
+<div class="highlight">
+<pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:body</span> <span class="o">=&gt;</span> <span class="s2">"Wow, acts_as_async is neat!"</span><span class="p">)</span>
+
+<span class="c1"># Self-destruct as soon as possible</span>
+<span class="n">post</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="ss">:destroy</span><span class="p">)</span>
+
+<span class="c1"># Self-destruct at this time tomorrow</span>
+<span class="n">post</span><span class="o">.</span><span class="n">async_at</span><span class="p">(</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="ss">:destroy</span><span class="p">)</span>
+
+<span class="c1"># Self-destruct in 10 minutes</span>
+<span class="n">post</span><span class="o">.</span><span class="n">async_in</span><span class="p">(</span><span class="mi">10</span><span class="o">.</span><span class="n">minutes</span><span class="p">,</span> <span class="ss">:destroy</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>It also adds three identical class methods:</p>
+
+<div class="highlight">
+<pre><span class="no">Post</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="ss">:destroy_all</span><span class="p">)</span>
+<span class="no">Post</span><span class="o">.</span><span class="n">async_at</span><span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="o">.</span><span class="n">from_now</span><span class="p">,</span> <span class="ss">:destroy_all</span><span class="p">)</span>
+<span class="no">Post</span><span class="o">.</span><span class="n">async_in</span><span class="p">(</span><span class="mi">10</span><span class="o">.</span><span class="n">minutes</span><span class="p">,</span> <span class="ss">:destroy_all</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<h3>Dynamic methods</h3>
+
+<p>In addition to the helper methods above, ActsAsAsync supports dynamic methods
+for any existing method on your model. For example:</p>
+
+<div class="highlight">
+<pre><span class="k">class</span> <span class="nc">Audiobook</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">acts_as_async</span>
+
+  <span class="k">def</span> <span class="nf">transcribe</span>
+    <span class="c1"># Some long-running logic here</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">read!</span>
+    <span class="c1"># Computers like to read too!</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">paint</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+    <span class="c1"># I don't know why you'd paint a book...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">book</span> <span class="o">=</span> <span class="no">Audiobook</span><span class="o">.</span><span class="n">first</span>
+
+<span class="c1"># Transcribe the book as soon as possible</span>
+<span class="n">book</span><span class="o">.</span><span class="n">async_transcribe</span>
+
+<span class="c1"># Read the book at this time tomorrow</span>
+<span class="n">book</span><span class="o">.</span><span class="n">async_read_at!</span><span class="p">(</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="mi">1</span><span class="o">.</span><span class="n">day</span><span class="p">)</span>
+
+<span class="c1"># Paint the book blue in a couple years</span>
+<span class="n">book</span><span class="o">.</span><span class="n">async_paint_in</span><span class="p">(</span><span class="mi">2</span><span class="o">.</span><span class="n">years</span><span class="p">,</span> <span class="s2">"blue"</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<h3>Additional notes</h3>
+
+<ul>
+<li>You can pass any number of additional arguments to async'd methods so long
+as they can be serialized into JSON</li>
+<li>Adding acts_as_async to your Gemfile automatically loads both Resque and
+Resque-scheduler's rake tasks. This means you can use both
+<code>$ rake resque:work</code> and <code>$ rake resque:scheduler</code> right out of the box.</li>
+<li>By deafult, each model will add tasks to a queue named "default". You can
+pass the <code>:queue</code> option to <code>acts_as_async</code> to specify a different queue.</li>
+<li>Dynamic methods support names with exclamation points but not question
+marks. This was a design decision to discourage misuse of the question mark
+in method names. If you absolutely must async a method with a question mark,
+just use one of the <code>async :method</code> helpers.</li>
+</ul><h2>Everything else...</h2>
+
+<p>ActsAsAsync is simply a thin layer on top of <a href="https://github.com/defunkt/resque">Resque</a> and
+<a href="https://github.com/bvandenbos/resque-scheduler">Resque-scheduler</a>. To learn how to configure your redis
+connection, run workers, view the web interface, and more visit their home
+pages.</p>
+
+<h2>Compatibility</h2>
+
+<p>ActsAsAsync is tested against the following Rubies: MRI 1.8.7, MRI 1.9.2,
+MRI 1.9.3, Rubinius 2.0, and JRuby.</p>
+
+<h2>License</h2>
+
+<p>ActsAsAsync is released under the MIT license. See the LICENSE file for more
+info.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/bloudermilk">bloudermilk</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
