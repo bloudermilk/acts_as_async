@@ -1,3 +1,7 @@
+## 0.3.0 (2012-06-03)
+* [#8](https://github.com/bloudermilk/acts_as_async/issues/8): Raise an error if
+  record has no id
+
 ## 0.2.4 (2012-03-24)
 * [#5](https://github.com/bloudermilk/acts_as_async/issues/5): Fixes bug that
   broke STI
