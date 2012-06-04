@@ -55,7 +55,7 @@ describe ActsAsAsync::Helper do
   describe ".async_at" do
     let(:model) { new_async_model }
     let(:time) { Time.now }
-    
+
     it "should enqueue at the passed time" do
       Resque.should_receive(:enqueue_at).with(time, anything, anything)
       model.async_at time, :foo
@@ -80,7 +80,7 @@ describe ActsAsAsync::Helper do
   describe ".async_in" do
     let(:model) { new_async_model }
     let(:interval) { 10.minutes }
-    
+
     it "should enqueue at the passed time interval" do
       Resque.should_receive(:enqueue_in).with(interval, anything, anything)
       model.async_in interval, :foo
@@ -112,7 +112,7 @@ describe ActsAsAsync::Helper do
         inherited.instance_variable_get(:@queue).should == :default
       end
     end
-  end  
+  end
 
   describe "#async" do
     let (:instance) { Model.create }
@@ -141,7 +141,7 @@ describe ActsAsAsync::Helper do
   describe "#async_at" do
     let (:instance) { Model.create }
     let (:time) { Time.now }
-    
+
     it "should enqueue at the passed time" do
       Resque.should_receive(:enqueue_at).with(time, anything, anything, anything)
       instance.async_at time, :foo
@@ -171,7 +171,7 @@ describe ActsAsAsync::Helper do
   describe "#async_in" do
     let (:instance) { Model.create }
     let (:interval) { 10.minutes }
-    
+
     it "should enqueue at the passed time interval" do
       Resque.should_receive(:enqueue_in).with(interval, anything, anything, anything)
       instance.async_in interval, :foo
@@ -197,7 +197,7 @@ describe ActsAsAsync::Helper do
       instance.async_in interval, :foo, "bar", "baz"
     end
   end
-  
+
   describe "::METHOD_REGEXP" do
     let(:regexp) { ActsAsAsync::Helper::SharedMethods::METHOD_REGEXP }
 
@@ -304,7 +304,7 @@ describe ActsAsAsync::Helper do
         end
       end
     end
-    
+
     context "when the extracted method doesn't exist" do
       it "should raise NoMethodError" do
         lambda { Model.async_nonexistant_method }.should raise_error(NoMethodError)
