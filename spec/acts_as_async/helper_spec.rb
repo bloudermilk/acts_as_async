@@ -3,102 +3,100 @@ require "spec_helper"
 describe ActsAsAsync::Helper do
   describe ".perform" do
     context "when no ID is passed" do
-      let(:model) do
-        new_async_model
-      end
+      subject { new_async_model }
 
       it "should call class methods" do
-        model.should_receive(:foobar)
-        model.perform "foobar"
+        subject.should_receive(:foobar)
+        subject.perform "foobar"
       end
 
       it "should pass arguments" do
-        model.should_receive(:foobar).with("foo", "bar")
-        model.perform "foobar", "foo", "bar"
+        subject.should_receive(:foobar).with("foo", "bar")
+        subject.perform "foobar", "foo", "bar"
       end
     end
 
     context "when an ID is passed" do
-      let(:instance) { Model.create }
+      subject { Model.create }
 
       it "should call instance methods" do
-        Model.perform instance.id, "smash!"
-        instance.reload.name.should == "SMASHED"
+        Model.perform subject.id, "smash!"
+        subject.reload.name.should == "SMASHED"
       end
 
       it "should pass arguments" do
-        Model.perform instance.id, "smash!", "LOL"
-        instance.reload.name.should == "LOL"
+        Model.perform subject.id, "smash!", "LOL"
+        subject.reload.name.should == "LOL"
       end
     end
   end
 
   describe ".async" do
-    let(:model) { new_async_model }
+    subject { new_async_model }
 
     it "should enqueue the current class" do
-      Resque.should_receive(:enqueue).with(model, anything)
-      model.async :foo
+      Resque.should_receive(:enqueue).with(subject, anything)
+      subject.async :foo
     end
 
     it "should enqueue the passed method" do
       Resque.should_receive(:enqueue).with(anything, :foo)
-      model.async :foo
+      subject.async :foo
     end
 
     it "should append any additional arguments" do
       Resque.should_receive(:enqueue).with(anything, anything, "foo", "bar")
-      model.async :foo, "foo", "bar"
+      subject.async :foo, "foo", "bar"
     end
   end
 
   describe ".async_at" do
-    let(:model) { new_async_model }
+    subject { new_async_model }
     let(:time) { Time.now }
 
     it "should enqueue at the passed time" do
       Resque.should_receive(:enqueue_at).with(time, anything, anything)
-      model.async_at time, :foo
+      subject.async_at time, :foo
     end
 
     it "should enqueue the current class" do
-      Resque.should_receive(:enqueue_at).with(anything, model, anything)
-      model.async_at time, :foo
+      Resque.should_receive(:enqueue_at).with(anything, subject, anything)
+      subject.async_at time, :foo
     end
 
     it "should enqueue the passed method" do
       Resque.should_receive(:enqueue_at).with(anything, anything, :foo)
-      model.async_at time, :foo
+      subject.async_at time, :foo
     end
 
     it "should append any additional arguments" do
       Resque.should_receive(:enqueue_at).with(anything, anything, anything, "bar", "baz")
-      model.async_at time, :foo, "bar", "baz"
+      subject.async_at time, :foo, "bar", "baz"
     end
   end
 
   describe ".async_in" do
-    let(:model) { new_async_model }
+    subject { new_async_model }
     let(:interval) { 10.minutes }
 
     it "should enqueue at the passed time interval" do
       Resque.should_receive(:enqueue_in).with(interval, anything, anything)
-      model.async_in interval, :foo
+      subject.async_in interval, :foo
     end
 
     it "should enqueue the current class" do
-      Resque.should_receive(:enqueue_in).with(anything, model, anything)
-      model.async_in interval, :foo
+      Resque.should_receive(:enqueue_in).with(anything, subject, anything)
+      subject.async_in interval, :foo
     end
 
     it "should enqueue the passed method" do
       Resque.should_receive(:enqueue_in).with(anything, anything, :foo)
-      model.async_in interval, :foo
+      subject.async_in interval, :foo
     end
 
     it "should append any additional arguments" do
       Resque.should_receive(:enqueue_in).with(anything, anything, anything, "bar", "baz")
-      model.async_in interval, :foo, "bar", "baz"
+      subject.async_in interval, :foo, "bar", "baz"
     end
   end
 
@@ -106,161 +104,161 @@ describe ActsAsAsync::Helper do
   describe ".inherited" do
     context "when @queue isn't set" do
       let(:model) { new_async_model }
-      let(:inherited) { Class.new model }
+      subject { Class.new model }
 
       it "should set @queue to the value of the parent" do
-        inherited.instance_variable_get(:@queue).should == :default
+        subject.instance_variable_get(:@queue).should == :default
       end
     end
   end
 
   describe "#async" do
-    let (:instance) { Model.create }
+    subject { Model.create }
 
     it "should enqueue the current class" do
-      Resque.should_receive(:enqueue).with(instance.class, anything, anything)
-      instance.async :foo
+      Resque.should_receive(:enqueue).with(subject.class, anything, anything)
+      subject.async :foo
     end
 
     it "should enqueue the current instance" do
-      Resque.should_receive(:enqueue).with(anything, instance.id, anything)
-      instance.async :foo
+      Resque.should_receive(:enqueue).with(anything, subject.id, anything)
+      subject.async :foo
     end
 
     it "should enqueue the passed method" do
       Resque.should_receive(:enqueue).with(anything, anything, :foo)
-      instance.async :foo
+      subject.async :foo
     end
 
     it "should append any additional arguments" do
       Resque.should_receive(:enqueue).with(anything, anything, anything, "bar", "baz")
-      instance.async :foo, "bar", "baz"
+      subject.async :foo, "bar", "baz"
     end
 
     it "should raise an error if the instance isn't saved" do
-      instance = Model.new
-      proc { instance.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
+      subject = Model.new
+      proc { subject.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
     end
   end
 
   describe "#async_at" do
-    let (:instance) { Model.create }
-    let (:time) { Time.now }
+    subject { Model.create }
+    let(:time) { Time.now }
 
     it "should enqueue at the passed time" do
       Resque.should_receive(:enqueue_at).with(time, anything, anything, anything)
-      instance.async_at time, :foo
+      subject.async_at time, :foo
     end
 
     it "should enqueue the current class" do
-      Resque.should_receive(:enqueue_at).with(anything, instance.class, anything, anything)
-      instance.async_at time, :foo
+      Resque.should_receive(:enqueue_at).with(anything, subject.class, anything, anything)
+      subject.async_at time, :foo
     end
 
     it "should enqueue the current instance" do
-      Resque.should_receive(:enqueue_at).with(anything, anything, instance.id, anything)
-      instance.async_at time, :foo
+      Resque.should_receive(:enqueue_at).with(anything, anything, subject.id, anything)
+      subject.async_at time, :foo
     end
 
     it "should enqueue the passed method" do
       Resque.should_receive(:enqueue_at).with(anything, anything, anything, :foo)
-      instance.async_at time, :foo
+      subject.async_at time, :foo
     end
 
     it "should append any additional arguments" do
       Resque.should_receive(:enqueue_at).with(anything, anything, anything, anything, "bar", "baz")
-      instance.async_at time, :foo, "bar", "baz"
+      subject.async_at time, :foo, "bar", "baz"
     end
 
     it "should raise an error if the instance isn't saved" do
-      instance = Model.new
-      proc { instance.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
+      subject = Model.new
+      proc { subject.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
     end
   end
 
   describe "#async_in" do
-    let (:instance) { Model.create }
-    let (:interval) { 10.minutes }
+    subject { Model.create }
+    let(:interval) { 10.minutes }
 
     it "should enqueue at the passed time interval" do
       Resque.should_receive(:enqueue_in).with(interval, anything, anything, anything)
-      instance.async_in interval, :foo
+      subject.async_in interval, :foo
     end
 
     it "should enqueue the current class" do
-      Resque.should_receive(:enqueue_in).with(anything, instance.class, anything, anything)
-      instance.async_in interval, :foo
+      Resque.should_receive(:enqueue_in).with(anything, subject.class, anything, anything)
+      subject.async_in interval, :foo
     end
 
     it "should enqueue the current instance" do
-      Resque.should_receive(:enqueue_in).with(anything, anything, instance.id, anything)
-      instance.async_in interval, :foo
+      Resque.should_receive(:enqueue_in).with(anything, anything, subject.id, anything)
+      subject.async_in interval, :foo
     end
 
     it "should enqueue the passed method" do
       Resque.should_receive(:enqueue_in).with(anything, anything, anything, :foo)
-      instance.async_in interval, :foo
+      subject.async_in interval, :foo
     end
 
     it "should append any additional arguments" do
       Resque.should_receive(:enqueue_in).with(anything, anything, anything, anything, "bar", "baz")
-      instance.async_in interval, :foo, "bar", "baz"
+      subject.async_in interval, :foo, "bar", "baz"
     end
 
     it "should raise an error if the instance isn't saved" do
-      instance = Model.new
-      proc { instance.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
+      subject = Model.new
+      proc { subject.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
     end
   end
 
   describe "::METHOD_REGEXP" do
-    let(:regexp) { ActsAsAsync::Helper::SharedMethods::METHOD_REGEXP }
+    subject { ActsAsAsync::Helper::SharedMethods::METHOD_REGEXP }
 
     it "should match async_foobar" do
-      "async_foobar".should match(regexp)
+      subject.should match("async_foobar")
     end
 
     it "should match async_foobar!" do
-      "async_foobar!".should match(regexp)
+      subject.should match("async_foobar!")
     end
 
     it "should match async_foobar_at" do
-      "async_foobar_at".should match(regexp)
+      subject.should match("async_foobar_at")
     end
 
     it "should match async_foobar_at!" do
-      "async_foobar_at!".should match(regexp)
+      subject.should match("async_foobar_at!")
     end
 
     it "should match async_foobar_in" do
-      "async_foobarin".should match(regexp)
+      subject.should match("async_foobarin")
     end
 
     it "should match async_foobar_in!" do
-      "async_foobar_in!".should match(regexp)
+      subject.should match("async_foobar_in!")
     end
 
     it "should not match async_123" do
-      "async_123".should_not match(regexp)
+      subject.should_not match("async_123")
     end
 
     it "should capture the method name" do
-      match = "async_foobar".match regexp
+      match = "async_foobar".match subject
       match[1].should == "foobar"
     end
 
     it "should capture a trailing '_at'" do
-      match = "async_foobar_at".match regexp
+      match = "async_foobar_at".match subject
       match[2].should == "_at"
     end
 
     it "should capture a trailing '_in'" do
-      match = "async_foobar_in".match regexp
+      match = "async_foobar_in".match subject
       match[2].should == "_in"
     end
 
     it "should capture a trailing '!'" do
-      match = "async_foobar!".match regexp
+      match = "async_foobar!".match subject
       match[3].should == "!"
     end
   end
@@ -286,7 +284,8 @@ describe ActsAsAsync::Helper do
       end
 
       context "when the method matches async_at" do
-        let (:time) { Time.now }
+        let(:time) { Time.now }
+
         it "should call async_at with the extracted method" do
           Model.should_receive(:async_at).with(time, "lol")
           Model.async_lol_at time
@@ -299,7 +298,8 @@ describe ActsAsAsync::Helper do
       end
 
       context "when the method matches async_in" do
-        let (:interval) { 10.minutes }
+        let(:interval) { 10.minutes }
+
         it "should call async_at with the extracted method" do
           Model.should_receive(:async_in).with(interval, "lol")
           Model.async_lol_in interval
@@ -312,10 +312,10 @@ describe ActsAsAsync::Helper do
       end
 
       context "when the matched method is private" do
-        let (:model) { Model.create }
+        subject { Model.create }
 
         it "should still work" do
-          lambda { model.async_a_private_method }.should_not raise_error
+          lambda { subject.async_a_private_method }.should_not raise_error
         end
       end
     end
