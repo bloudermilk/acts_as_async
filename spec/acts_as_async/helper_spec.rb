@@ -136,6 +136,11 @@ describe ActsAsAsync::Helper do
       Resque.should_receive(:enqueue).with(anything, anything, anything, "bar", "baz")
       instance.async :foo, "bar", "baz"
     end
+
+    it "should raise an error if the instance isn't saved" do
+      instance = Model.new
+      proc { instance.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
+    end
   end
 
   describe "#async_at" do
@@ -166,6 +171,11 @@ describe ActsAsAsync::Helper do
       Resque.should_receive(:enqueue_at).with(anything, anything, anything, anything, "bar", "baz")
       instance.async_at time, :foo, "bar", "baz"
     end
+
+    it "should raise an error if the instance isn't saved" do
+      instance = Model.new
+      proc { instance.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
+    end
   end
 
   describe "#async_in" do
@@ -195,6 +205,11 @@ describe ActsAsAsync::Helper do
     it "should append any additional arguments" do
       Resque.should_receive(:enqueue_in).with(anything, anything, anything, anything, "bar", "baz")
       instance.async_in interval, :foo, "bar", "baz"
+    end
+
+    it "should raise an error if the instance isn't saved" do
+      instance = Model.new
+      proc { instance.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
     end
   end
 

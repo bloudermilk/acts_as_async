@@ -45,14 +45,17 @@ module ActsAsAsync
     end
 
     def async(method, *args)
+      raise MissingIDError unless id
       Resque.enqueue(self.class, id, method, *args)
     end
 
     def async_at(time, method, *args)
+      raise MissingIDError unless id
       Resque.enqueue_at(time, self.class, id, method, *args)
     end
 
     def async_in(time, method, *args)
+      raise MissingIDError unless id
       Resque.enqueue_in(time, self.class, id, method, *args)
     end
 

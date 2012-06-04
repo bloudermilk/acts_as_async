@@ -5,6 +5,7 @@ require "active_record"
 require "resque"
 require "resque_scheduler"
 
+require "acts_as_async/errors"
 require "acts_as_async/base_extensions"
 require "acts_as_async/helper"
 require "acts_as_async/version"
