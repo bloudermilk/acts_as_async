@@ -172,7 +172,7 @@ describe ActsAsAsync::Helper do
 
     it "should raise an error if the instance isn't saved" do
       subject = Model.new
-      proc { subject.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
+      proc { subject.async_at time, :foo }.should raise_error(ActsAsAsync::MissingIDError)
     end
   end
 
@@ -207,7 +207,7 @@ describe ActsAsAsync::Helper do
 
     it "should raise an error if the instance isn't saved" do
       subject = Model.new
-      proc { subject.async :foo }.should raise_error(ActsAsAsync::MissingIDError)
+      proc { subject.async_in interval, :foo }.should raise_error(ActsAsAsync::MissingIDError)
     end
   end
 
