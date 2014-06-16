@@ -7,7 +7,7 @@ require "resque"
 # Resque scheduler changed namespace, this probably isn't best way to support both old & new one but it's only way I can think of
 begin
   require "resque_scheduler"
-rescue
+rescue LoadError
   require "resque-scheduler"
 end
 
